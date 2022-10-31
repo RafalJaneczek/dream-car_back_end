@@ -1,0 +1,21 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: 'org.hibernate.dialect.Oracle10gDialect'
+    show-sql: true
+  datasource:
+    url: 'jdbc:oracle:thin:@localhost:1521/ORCLCDB.localdomain'
+    username: 'dummy'
+    password: 'dummy'
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+  properties:
+    hibernate:
+      format_sql: true
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  flyway:
+    baseline-on-migrate: true
+server:
+  port: 8083

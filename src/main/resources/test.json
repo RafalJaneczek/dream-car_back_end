@@ -1,0 +1,14 @@
+{
+  "model": "Audi",
+  "type": "A4",
+  "plate": "WKZ SU84",
+  "deliveryDate": "01.01.2020",
+  "deadline": "01.02.2020",
+  "color": "black",
+  "power": "220",
+  "clientFirstName": "Rafal",
+  "clientSurname": "Janeczek",
+  "cost": "27000",
+  "isFullyDamaged": "false",
+  "year": "2006"
+}
