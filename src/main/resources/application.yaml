@@ -6,8 +6,8 @@ spring:
     show-sql: true
   datasource:
     url: 'jdbc:oracle:thin:@localhost:1521/ORCLCDB.localdomain'
-    username: 'dummy'
-    password: 'dummy'
+    username: 'car_service'
+    password: 'car_service'
     driver-class-name: oracle.jdbc.driver.OracleDriver
   properties:
     hibernate:
