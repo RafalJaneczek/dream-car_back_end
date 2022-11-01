@@ -33,8 +33,8 @@ public class CarService {
         return ResponseEntity.created(URI.create("/car/get/" + result.getId())).body(result);
     }
 
-    public ResponseEntity<Car> removeCar(Car car) {
-        repository.delete(car);
+    public ResponseEntity<Car> removeCar(int id) {
+        repository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 

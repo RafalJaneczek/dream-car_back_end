@@ -17,7 +17,7 @@ public class CarsController {
         this.carService = carService;
     }
 
-    @GetMapping("/get{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<Car> getCar(@PathVariable("id") int id) {
         return carService.findCar(id);
     }
@@ -32,14 +32,14 @@ public class CarsController {
         return carService.saveCar(car);
     }
 
-    @PutMapping("/update{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> updateCar(@PathVariable("id") int id, @RequestBody Car car) {
         return carService.updateCar(id, car);
     }
 
-    @DeleteMapping("/remove")
-    public ResponseEntity<Car> removeCar(@RequestBody Car car) {
-        return carService.removeCar(car);
+    @DeleteMapping("/remove/{id}")
+    public ResponseEntity<Car> removeCar(@PathVariable int id) {
+        return carService.removeCar(id);
     }
 
 }
