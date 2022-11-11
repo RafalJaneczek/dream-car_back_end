@@ -1,16 +1,21 @@
 package pl.NeverEndingCode.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
-@Data
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "CAR")
 public class Car {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="car_sequence")
+    @SequenceGenerator(name = "car_sequence", sequenceName = "car_sequence", allocationSize = 1)
     private int id;
     private String model;
     private String type;

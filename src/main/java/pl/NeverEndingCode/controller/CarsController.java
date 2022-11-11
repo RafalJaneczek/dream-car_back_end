@@ -7,6 +7,7 @@ import pl.NeverEndingCode.service.CarService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(value = "/car")
 public class CarsController {
@@ -38,7 +39,7 @@ public class CarsController {
     }
 
     @DeleteMapping("/remove/{id}")
-    public ResponseEntity<Car> removeCar(@PathVariable int id) {
+    public ResponseEntity<?> removeCar(@PathVariable int id) {
         return carService.removeCar(id);
     }
 
