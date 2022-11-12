@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.NeverEndingCode.enums.car.BodyType;
-import pl.NeverEndingCode.enums.car.EngineType;
+import pl.NeverEndingCode.enums.motorcycle.BodyType;
+import pl.NeverEndingCode.enums.motorcycle.EngineType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,20 +16,16 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "CARS")
-public class Car extends Vehicle {
+@Table(name = "MOTORTYCLES")
+public class Motorcycle extends Vehicle {
     @Column(name = "ENGINE_TYPE")
     private EngineType engineType;
-    @Column(name = "BODY_TYPE")
-    private BodyType bodyType;
-    @Column(name = "NUMBER_OF_SEATS")
-    private int numberOfSeats;
+    @Column(name = "TYPE")
+    private BodyType type;
 
-    public void updateFrom(final Car source) {
+    public void updateFrom(final Motorcycle source) {
         super.updateFrom(source);
         this.engineType = source.engineType;
-        this.bodyType = source.bodyType;
-        this.numberOfSeats = source.numberOfSeats;
+        this.type = source.type;
     }
-
 }
