@@ -7,6 +7,7 @@ import lombok.Setter;
 import pl.NeverEndingCode.enums.VehicleCondition;
 
 import javax.persistence.*;
+import java.math.BigInteger;
 
 @Getter
 @Setter
@@ -33,6 +34,8 @@ public class Vehicle {
     protected VehicleCondition vehicleCondition;
     @Column(name = "DAMAGED")
     protected boolean damaged;
+    @Column(name = "PRICE")
+    private BigInteger price;
 
     protected void updateFrom(Vehicle source) {
         this.mark = source.mark;
@@ -42,6 +45,7 @@ public class Vehicle {
         this.course = source.course;
         this.vehicleCondition = source.vehicleCondition;
         this.damaged = source.damaged;
+        this.price = source.price;
     }
 
 }
