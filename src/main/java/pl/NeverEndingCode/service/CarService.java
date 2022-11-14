@@ -1,5 +1,7 @@
 package pl.NeverEndingCode.service;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,14 +11,12 @@ import pl.NeverEndingCode.repository.CarRepository;
 import java.net.URI;
 import java.util.List;
 
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class CarService {
 
     private final CarRepository repository;
-
-    public CarService(CarRepository repository) {
-        this.repository = repository;
-    }
 
     public ResponseEntity<List<Car>> findCars() {
         return ResponseEntity.ok(repository.findAll());
@@ -41,6 +41,7 @@ public class CarService {
     @Transactional
     public ResponseEntity<?> updateCar(int id, Car toUpdate) {
         if (repository.existsById(id)) {
+            log.error("Car with id" + id + " not found");
             return ResponseEntity.notFound().build();
         }
         repository.findById(id).ifPresent(car -> {
