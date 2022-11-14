@@ -34,6 +34,8 @@ public class Vehicle {
     protected VehicleCondition vehicleCondition;
     @Column(name = "DAMAGED")
     protected boolean damaged;
+    @Column(name = "PRODUCTION_YEAR")
+    private int productionYear;
     @Column(name = "PRICE")
     private BigInteger price;
 
@@ -45,6 +47,7 @@ public class Vehicle {
         this.course = source.course;
         this.vehicleCondition = source.vehicleCondition;
         this.damaged = source.damaged;
+        this.productionYear = source.productionYear;
         this.price = source.price;
     }
 
