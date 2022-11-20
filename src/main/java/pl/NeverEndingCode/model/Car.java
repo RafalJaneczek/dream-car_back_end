@@ -8,6 +8,7 @@ import pl.NeverEndingCode.enums.car.BodyType;
 import pl.NeverEndingCode.enums.car.EngineType;
 
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
@@ -16,14 +17,16 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "CARS")
+@Table(name = "cars")
 public class Car extends Vehicle {
-    @Column(name = "ENGINE_TYPE")
+    @Column(name = "engine_type")
     private EngineType engineType;
-    @Column(name = "BODY_TYPE")
+    @Column(name = "body_type")
     private BodyType bodyType;
-    @Column(name = "NUMBER_OF_SEATS")
+    @Column(name = "number_of_seats")
     private int numberOfSeats;
+    @Embedded
+    private Audit audit = new Audit();
 
     public void updateFrom(final Car source) {
         super.updateFrom(source);

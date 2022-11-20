@@ -40,7 +40,7 @@ public class CarService {
 
     @Transactional
     public ResponseEntity<?> updateCar(int id, Car toUpdate) {
-        if (repository.existsById(id)) {
+        if (!repository.existsById(id)) {
             log.error("Car with id" + id + " not found");
             return ResponseEntity.notFound().build();
         }
