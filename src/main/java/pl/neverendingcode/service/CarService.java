@@ -1,12 +1,13 @@
-package pl.NeverEndingCode.service;
+package pl.neverendingcode.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.NeverEndingCode.model.Car;
-import pl.NeverEndingCode.repository.CarRepository;
+import pl.neverendingcode.exception.CarNotFoundException;
+import pl.neverendingcode.model.Car;
+import pl.neverendingcode.repository.CarRepository;
 
 import java.net.URI;
 import java.util.List;
@@ -25,7 +26,7 @@ public class CarService {
     public ResponseEntity<Car> findCar(int id) {
         return repository.findById(id)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new CarNotFoundException("Car with id: " + id + " not found"));
     }
 
     public ResponseEntity<Car> saveCar(Car car) {
@@ -41,8 +42,7 @@ public class CarService {
     @Transactional
     public ResponseEntity<?> updateCar(int id, Car toUpdate) {
         if (!repository.existsById(id)) {
-            log.error("Car with id" + id + " not found");
-            return ResponseEntity.notFound().build();
+            throw new CarNotFoundException("Car with id: " + id + " not found");
         }
         repository.findById(id).ifPresent(car -> {
             car.updateFrom(toUpdate);

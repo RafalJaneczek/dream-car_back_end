@@ -1,4 +1,4 @@
-package pl.NeverEndingCode;
+package pl.neverendingcode;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

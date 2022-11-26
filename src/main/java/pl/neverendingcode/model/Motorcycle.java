@@ -1,11 +1,11 @@
-package pl.NeverEndingCode.model;
+package pl.neverendingcode.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.NeverEndingCode.enums.motorcycle.BodyType;
-import pl.NeverEndingCode.enums.motorcycle.EngineType;
+import pl.neverendingcode.enums.motorcycle.BodyType;
+import pl.neverendingcode.enums.motorcycle.EngineType;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

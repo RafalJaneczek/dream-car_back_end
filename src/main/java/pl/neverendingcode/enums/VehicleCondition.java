@@ -1,4 +1,4 @@
-package pl.NeverEndingCode.enums;
+package pl.neverendingcode.enums;
 
 public enum VehicleCondition {
     NEW, USED

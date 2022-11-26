@@ -1,20 +1,20 @@
-package pl.NeverEndingCode.controller;
+package pl.neverendingcode.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.NeverEndingCode.model.Car;
-import pl.NeverEndingCode.service.CarService;
+import pl.neverendingcode.model.Car;
+import pl.neverendingcode.service.CarService;
 
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(value = "/car")
-public class CarsController {
+public class CarController {
 
     private final CarService carService;
 
-    public CarsController(CarService carService) {
+    public CarController(CarService carService) {
         this.carService = carService;
     }
 

@@ -1,10 +1,10 @@
-package pl.NeverEndingCode.model;
+package pl.neverendingcode.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.NeverEndingCode.enums.VehicleCondition;
+import pl.neverendingcode.enums.VehicleCondition;
 
 import javax.persistence.*;
 import java.math.BigInteger;

@@ -1,4 +1,4 @@
-package pl.NeverEndingCode.model;
+package pl.neverendingcode.model;
 
 import lombok.Getter;
 import lombok.Setter;
