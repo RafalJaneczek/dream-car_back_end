@@ -8,6 +8,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -15,18 +16,23 @@ import java.time.LocalDateTime;
 public class Audit {
 
     @Column(name = "created_on")
-    private LocalDateTime createdOn;
+    private String createdOn;
     @Column(name = "updated_on")
-    private LocalDateTime updatedOn;
+    private String updatedOn;
 
     @PrePersist
     public void prePersist() {
-        createdOn = LocalDateTime.now();
+        createdOn = getFormattedDateTime();
     }
 
     @PreUpdate
     public void preUpdate() {
-        updatedOn = LocalDateTime.now();
+        updatedOn = getFormattedDateTime();
+    }
+
+    private String getFormattedDateTime() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return LocalDateTime.now().format(formatter);
     }
 
 }

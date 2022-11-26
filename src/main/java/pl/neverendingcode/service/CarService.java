@@ -40,16 +40,13 @@ public class CarService {
     }
 
     @Transactional
-    public ResponseEntity<?> updateCar(int id, Car toUpdate) {
-        if (!repository.existsById(id)) {
-            throw new CarNotFoundException("Car with id: " + id + " not found");
-        }
-        repository.findById(id).ifPresent(car -> {
+    public ResponseEntity<Car> updateCar(int id, Car toUpdate) {
+        Car result = repository.findById(id).map(car -> {
             car.updateFrom(toUpdate);
-            repository.save(car);
-        });
-
-        return ResponseEntity.noContent().build();
+            return repository.save(car);
+        }).orElseThrow(() -> new CarNotFoundException("Car with id: " + id + " not found"));
+        log.info("Car with id: " + toUpdate.getId() + " has been updated successfully");
+        return ResponseEntity.ok().body(result);
     }
 
 }
