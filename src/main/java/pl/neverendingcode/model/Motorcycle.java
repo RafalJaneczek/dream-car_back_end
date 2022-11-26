@@ -7,20 +7,19 @@ import lombok.Setter;
 import pl.neverendingcode.enums.motorcycle.BodyType;
 import pl.neverendingcode.enums.motorcycle.EngineType;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "MOTORTYCLES")
+@Table(name = "motorcycles")
 public class Motorcycle extends Vehicle {
-    @Column(name = "ENGINE_TYPE")
+    @Column(name = "engine_type")
     private EngineType engineType;
-    @Column(name = "TYPE")
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     private BodyType type;
 
     public void updateFrom(final Motorcycle source) {

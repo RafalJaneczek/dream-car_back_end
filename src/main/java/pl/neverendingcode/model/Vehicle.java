@@ -20,23 +20,24 @@ public class Vehicle {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vehicle_sequence")
     @SequenceGenerator(name = "vehicle_sequence", sequenceName = "vehicle_sequence", allocationSize = 1)
     private int id;
-    @Column(name = "MARK")
+    @Column(name = "mark")
     protected String mark;
-    @Column(name = "MODEL")
+    @Column(name = "model")
     protected String model;
-    @Column(name = "ENGINE_CAPACITY")
+    @Column(name = "engine_capacity")
     protected int engineCapacity;
-    @Column(name = "ENGINE_POWER")
+    @Column(name = "engine_power")
     protected int enginePower;
-    @Column(name = "COURSE")
+    @Column(name = "course")
     protected int course;
-    @Column(name = "VEHICLE_CONDITION")
+    @Column(name = "vehicle_condition")
+    @Enumerated(EnumType.STRING)
     protected VehicleCondition vehicleCondition;
-    @Column(name = "DAMAGED")
+    @Column(name = "damaged")
     protected boolean damaged;
-    @Column(name = "PRODUCTION_YEAR")
+    @Column(name = "production_year")
     private int productionYear;
-    @Column(name = "PRICE")
+    @Column(name = "price")
     private BigInteger price;
 
     protected void updateFrom(Vehicle source) {

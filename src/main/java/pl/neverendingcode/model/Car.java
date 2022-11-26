@@ -7,10 +7,7 @@ import lombok.Setter;
 import pl.neverendingcode.enums.car.BodyType;
 import pl.neverendingcode.enums.car.EngineType;
 
-import javax.persistence.Column;
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -20,8 +17,10 @@ import javax.persistence.Table;
 @Table(name = "cars")
 public class Car extends Vehicle {
     @Column(name = "engine_type")
+    @Enumerated(EnumType.STRING)
     private EngineType engineType;
     @Column(name = "body_type")
+    @Enumerated(EnumType.STRING)
     private BodyType bodyType;
     @Column(name = "number_of_seats")
     private int numberOfSeats;
