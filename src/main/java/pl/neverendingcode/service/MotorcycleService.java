@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.neverendingcode.exception.MotorcycleNotFoundException;
 import pl.neverendingcode.model.Motorcycle;
-import pl.neverendingcode.adapter.SqlMotorcycleRepository;
+import pl.neverendingcode.repository.MotorcycleRepository;
 
 import java.util.List;
 
@@ -16,32 +16,32 @@ import java.util.List;
 @AllArgsConstructor
 public class MotorcycleService {
 
-    private final SqlMotorcycleRepository repository;
+    private final MotorcycleRepository motorcycleRepository;
 
     public ResponseEntity<List<Motorcycle>> findAll() {
-        return ResponseEntity.ok().body(repository.findAll());
+        return ResponseEntity.ok().body(motorcycleRepository.findAll());
     }
 
     public ResponseEntity<Motorcycle> findMotorcycle(int id) {
-        return repository.findById(id)
+        return motorcycleRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseThrow(() -> new MotorcycleNotFoundException("Motorcycle with id: " + id + " not found"));
     }
 
     public ResponseEntity<Motorcycle> saveMotorcycle(Motorcycle motorcycle) {
-        return ResponseEntity.ok().body(repository.save(motorcycle));
+        return ResponseEntity.ok().body(motorcycleRepository.save(motorcycle));
     }
 
     public ResponseEntity<?> removeMotorcycle(int id) {
-        repository.deleteById(id);
+        motorcycleRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @Transactional
     public ResponseEntity<Motorcycle> updateMotorcycle(int id, Motorcycle toUpdate) {
-        Motorcycle result = repository.findById(id).map(motorcycle -> {
+        Motorcycle result = motorcycleRepository.findById(id).map(motorcycle -> {
             motorcycle.updateFrom(toUpdate);
-            return repository.save(motorcycle);
+            return motorcycleRepository.save(motorcycle);
         }).orElseThrow(() -> new MotorcycleNotFoundException("Car with id: " + id + " not found"));
         log.info("Motorcycle with id: " + toUpdate.getId() + " has been updated successfully");
         return ResponseEntity.ok().body(result);

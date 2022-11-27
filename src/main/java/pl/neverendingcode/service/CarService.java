@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.neverendingcode.exception.CarNotFoundException;
 import pl.neverendingcode.model.Car;
-import pl.neverendingcode.adapter.SqlCarRepository;
+import pl.neverendingcode.repository.CarRepository;
 
 import java.net.URI;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CarService {
 
-    private final SqlCarRepository repository;
+    private final CarRepository repository;
 
     public ResponseEntity<List<Car>> findCars() {
         return ResponseEntity.ok(repository.findAll());
