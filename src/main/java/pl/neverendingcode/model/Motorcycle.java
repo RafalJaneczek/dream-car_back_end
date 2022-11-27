@@ -22,6 +22,9 @@ public class Motorcycle extends Vehicle {
     @Enumerated(EnumType.STRING)
     private BodyType type;
 
+    @Embedded
+    private Audit audit = new Audit();
+
     public void updateFrom(final Motorcycle source) {
         super.updateFrom(source);
         this.engineType = source.engineType;

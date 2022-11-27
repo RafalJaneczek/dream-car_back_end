@@ -1,5 +1,6 @@
 package pl.neverendingcode.controller;
 
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.neverendingcode.model.Car;
@@ -10,13 +11,10 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(value = "/car")
+@AllArgsConstructor
 public class CarController {
 
     private final CarService carService;
-
-    public CarController(CarService carService) {
-        this.carService = carService;
-    }
 
     @GetMapping("/get/{id}")
     public ResponseEntity<Car> getCar(@PathVariable("id") int id) {
