@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.neverendingcode.exception.MotorcycleNotFoundException;
 import pl.neverendingcode.model.Motorcycle;
-import pl.neverendingcode.repository.MotorcycleRepository;
+import pl.neverendingcode.adapter.SqlMotorcycleRepository;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class MotorcycleService {
 
-    private final MotorcycleRepository repository;
+    private final SqlMotorcycleRepository repository;
 
     public ResponseEntity<List<Motorcycle>> findAll() {
         return ResponseEntity.ok().body(repository.findAll());

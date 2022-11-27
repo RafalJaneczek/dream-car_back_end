@@ -1,9 +1,18 @@
 package pl.neverendingcode.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 import pl.neverendingcode.model.Car;
 
-@Repository
-public interface CarRepository extends JpaRepository<Car, Integer> {
+import java.util.List;
+import java.util.Optional;
+
+public interface CarRepository {
+
+    List<Car> findAll();
+
+    Optional<Car> findById(int id);
+
+    Car save(Car car);
+
+    void deleteById(int id);
+
 }
