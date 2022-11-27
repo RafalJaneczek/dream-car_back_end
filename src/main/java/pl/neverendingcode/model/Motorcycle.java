@@ -18,9 +18,9 @@ import javax.persistence.*;
 public class Motorcycle extends Vehicle {
     @Column(name = "engine_type")
     private EngineType engineType;
-    @Column(name = "type")
+    @Column(name = "body_type")
     @Enumerated(EnumType.STRING)
-    private BodyType type;
+    private BodyType bodyType;
 
     @Embedded
     private Audit audit = new Audit();
@@ -28,6 +28,6 @@ public class Motorcycle extends Vehicle {
     public void updateFrom(final Motorcycle source) {
         super.updateFrom(source);
         this.engineType = source.engineType;
-        this.type = source.type;
+        this.bodyType = source.bodyType;
     }
 }
