@@ -1,42 +1,47 @@
-package pl.neverendingcode.service;
+package pl.neverendingcode.service.motorcycle;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.neverendingcode.adapter.MotorcycleRepositoryImpl;
 import pl.neverendingcode.exception.MotorcycleNotFoundException;
 import pl.neverendingcode.model.Motorcycle;
-import pl.neverendingcode.repository.MotorcycleRepository;
 
 import java.util.List;
 
 @Slf4j
 @Service
 @AllArgsConstructor
-public class MotorcycleService {
+public class MotorcycleServiceImpl implements MotorcycleService {
 
-    private final MotorcycleRepository motorcycleRepository;
+    private final MotorcycleRepositoryImpl motorcycleRepository;
 
+    @Override
     public ResponseEntity<List<Motorcycle>> findAll() {
         return ResponseEntity.ok().body(motorcycleRepository.findAll());
     }
 
+    @Override
     public ResponseEntity<Motorcycle> findMotorcycle(int id) {
         return motorcycleRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseThrow(() -> new MotorcycleNotFoundException("Motorcycle with id: " + id + " not found"));
     }
 
+    @Override
     public ResponseEntity<Motorcycle> saveMotorcycle(Motorcycle motorcycle) {
         return ResponseEntity.ok().body(motorcycleRepository.save(motorcycle));
     }
 
+    @Override
     public ResponseEntity<?> removeMotorcycle(int id) {
         motorcycleRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
+    @Override
     @Transactional
     public ResponseEntity<Motorcycle> updateMotorcycle(int id, Motorcycle toUpdate) {
         Motorcycle result = motorcycleRepository.findById(id).map(motorcycle -> {

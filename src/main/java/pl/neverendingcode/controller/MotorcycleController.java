@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.neverendingcode.model.Motorcycle;
-import pl.neverendingcode.service.MotorcycleService;
+import pl.neverendingcode.service.motorcycle.MotorcycleServiceImpl;
 
 import java.util.List;
 
@@ -14,30 +14,30 @@ import java.util.List;
 @AllArgsConstructor
 public class MotorcycleController {
 
-    private final MotorcycleService motorcycleService;
+    private final MotorcycleServiceImpl motorcycleServiceImpl;
 
     @GetMapping("/get/{id}")
     public ResponseEntity<Motorcycle> getMotorcycle(@PathVariable("id") int id) {
-        return motorcycleService.findMotorcycle(id);
+        return motorcycleServiceImpl.findMotorcycle(id);
     }
 
     @GetMapping("/get-all")
     public ResponseEntity<List<Motorcycle>> getMotorcycles() {
-        return motorcycleService.findAll();
+        return motorcycleServiceImpl.findAll();
     }
 
     @PostMapping("/add")
     public ResponseEntity<Motorcycle> addMotorcycle(@RequestBody Motorcycle motorcycle) {
-        return motorcycleService.saveMotorcycle(motorcycle);
+        return motorcycleServiceImpl.saveMotorcycle(motorcycle);
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<Motorcycle> updateMotorcycle(@PathVariable("id") int id, @RequestBody Motorcycle motorcycle) {
-        return motorcycleService.updateMotorcycle(id, motorcycle);
+        return motorcycleServiceImpl.updateMotorcycle(id, motorcycle);
     }
 
     @DeleteMapping("/remove/{id}")
     public ResponseEntity<?> removeMotorcycle(@PathVariable("id") int id) {
-        return motorcycleService.removeMotorcycle(id);
+        return motorcycleServiceImpl.removeMotorcycle(id);
     }
 }

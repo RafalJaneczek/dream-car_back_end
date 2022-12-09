@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.neverendingcode.model.Car;
-import pl.neverendingcode.service.CarService;
+import pl.neverendingcode.service.car.CarServiceImpl;
 
 import java.util.List;
 
@@ -14,31 +14,31 @@ import java.util.List;
 @AllArgsConstructor
 public class CarController {
 
-    private final CarService carService;
+    private final CarServiceImpl carServiceImpl;
 
     @GetMapping("/get/{id}")
     public ResponseEntity<Car> getCar(@PathVariable("id") int id) {
-        return carService.findCar(id);
+        return carServiceImpl.findCar(id);
     }
 
     @GetMapping("/get-all")
     public ResponseEntity<List<Car>> getCars() {
-        return carService.findCars();
+        return carServiceImpl.findCars();
     }
 
     @PostMapping("/add")
     public ResponseEntity<Car> addCar(@RequestBody Car car) {
-        return carService.saveCar(car);
+        return carServiceImpl.saveCar(car);
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateCar(@PathVariable("id") int id, @RequestBody Car car) {
-        return carService.updateCar(id, car);
+        return carServiceImpl.updateCar(id, car);
     }
 
     @DeleteMapping("/remove/{id}")
     public ResponseEntity<?> removeCar(@PathVariable int id) {
-        return carService.removeCar(id);
+        return carServiceImpl.removeCar(id);
     }
 
 }
