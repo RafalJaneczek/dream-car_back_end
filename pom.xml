@@ -11,7 +11,7 @@
 	<groupId>pl.NeverEndingCode</groupId>
 	<artifactId>dream-car_backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>dream-car_backend</name>
+	<name>dream-car_back_end</name>
 	<description>Dream Car Back-end</description>
 	<properties>
 		<java.version>17</java.version>
