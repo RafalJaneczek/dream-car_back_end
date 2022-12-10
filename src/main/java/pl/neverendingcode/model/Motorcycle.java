@@ -17,9 +17,11 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @Table(name = "motorcycles")
 public class Motorcycle extends Vehicle {
+
     @Column(name = "engine_type")
     @NotBlank(message = "Engine type must not be empty")
     private EngineType engineType;
+
     @Column(name = "body_type")
     @Enumerated(EnumType.STRING)
     @NotBlank(message = "Body type must not be empty")
