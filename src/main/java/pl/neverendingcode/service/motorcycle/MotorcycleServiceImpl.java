@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.neverendingcode.adapter.MotorcycleRepositoryImpl;
+import pl.neverendingcode.adapter.VehicleRepositoryImpl;
 import pl.neverendingcode.exception.MotorcycleNotFoundException;
 import pl.neverendingcode.model.Motorcycle;
 
@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class MotorcycleServiceImpl implements MotorcycleService {
 
-    private final MotorcycleRepositoryImpl motorcycleRepository;
+    private final VehicleRepositoryImpl<Motorcycle> motorcycleRepository;
 
     @Override
     public ResponseEntity<List<Motorcycle>> findAll() {

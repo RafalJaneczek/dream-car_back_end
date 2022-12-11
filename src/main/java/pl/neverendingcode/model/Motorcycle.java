@@ -22,9 +22,9 @@ public class Motorcycle extends Vehicle {
     @NotBlank(message = "Engine type must not be empty")
     private EngineType engineType;
 
-    @Column(name = "body_type")
+    @Column(name = "type")
     @Enumerated(EnumType.STRING)
-    @NotBlank(message = "Body type must not be empty")
+    @NotBlank(message = "Type must not be empty")
     private Type type;
 
     @Embedded

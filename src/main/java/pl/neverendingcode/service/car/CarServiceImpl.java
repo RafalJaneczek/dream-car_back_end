@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.neverendingcode.adapter.CarRepositoryImpl;
+import pl.neverendingcode.adapter.VehicleRepositoryImpl;
 import pl.neverendingcode.exception.CarNotFoundException;
 import pl.neverendingcode.model.Car;
 
@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CarServiceImpl implements CarService {
 
-    private final CarRepositoryImpl carRepository;
+    private final VehicleRepositoryImpl<Car> carRepository;
 
     @Override
     public ResponseEntity<List<Car>> findCars() {
