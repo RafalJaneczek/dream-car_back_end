@@ -22,8 +22,10 @@ public class MotorcycleController {
     }
 
     @GetMapping("/get-all")
-    public ResponseEntity<List<Motorcycle>> getMotorcycles() {
-        return motorcycleServiceImpl.findAll();
+    public ResponseEntity<List<Motorcycle>> getMotorcycles(@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+                                                           @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                                           @RequestParam(value = "sortBy", defaultValue = "mark") String sortBy) {
+        return motorcycleServiceImpl.findMotorcycles(pageNo, pageSize, sortBy);
     }
 
     @PostMapping("/add")

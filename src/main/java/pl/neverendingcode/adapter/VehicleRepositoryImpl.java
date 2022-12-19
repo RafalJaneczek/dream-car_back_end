@@ -1,13 +1,14 @@
 package pl.neverendingcode.adapter;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import pl.neverendingcode.model.Vehicle;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface VehicleRepositoryImpl<T extends Vehicle> {
 
-    List<T> findAll();
+    Page<T> findAll(Pageable pageable);
 
     Optional<T> findById(int id);
 

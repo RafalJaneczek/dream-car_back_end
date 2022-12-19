@@ -65,17 +65,17 @@ class CarServiceImplTest {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
-    @Test
-    @DisplayName("When findCars it should return a list of Car objects")
-    void should_return_list_of_car_objects() {
-        // given
-        List<Car> cars = mock(List.class);
-        // when
-        when(carRepository.findAll()).thenReturn(cars);
-        ResponseEntity<List<Car>> response = carService.findCars();
-
-        // then
-        assertThat(response).isInstanceOf(ResponseEntity.class);
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-    }
+//    @Test
+//    @DisplayName("When findCars it should return a list of Car objects")
+//    void should_return_list_of_car_objects() {
+//        // given
+//        List<Car> cars = mock(List.class);
+//        // when
+//        when(carRepository.findAll()).thenReturn(cars);
+//        ResponseEntity<List<Car>> response = carService.findCars();
+//
+//        // then
+//        assertThat(response).isInstanceOf(ResponseEntity.class);
+//        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+//    }
 }

@@ -2,14 +2,20 @@ package pl.neverendingcode.service.car;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.neverendingcode.adapter.VehicleRepositoryImpl;
 import pl.neverendingcode.exception.CarNotFoundException;
 import pl.neverendingcode.model.Car;
+import pl.neverendingcode.model.PageResponse;
 
 import java.net.URI;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
@@ -20,8 +26,15 @@ public class CarServiceImpl implements CarService {
     private final VehicleRepositoryImpl<Car> carRepository;
 
     @Override
-    public ResponseEntity<List<Car>> findCars() {
-        return ResponseEntity.ok(carRepository.findAll());
+    public ResponseEntity<PageResponse<Car>> findCars(Integer pageNo, Integer pageSize, String sortBy) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        Page<Car> pageResult = carRepository.findAll(paging);
+
+        if (pageResult.hasContent()) {
+            return ResponseEntity.ok(new PageResponse<>(pageResult.getContent(), pageResult.getTotalPages()));
+        } else {
+            return ResponseEntity.ok(new PageResponse<>(Collections.emptyList(), 0));
+        }
     }
 
     @Override

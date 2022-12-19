@@ -4,9 +4,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.neverendingcode.model.Car;
+import pl.neverendingcode.model.PageResponse;
 import pl.neverendingcode.service.car.CarServiceImpl;
-
-import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -22,8 +21,10 @@ public class CarController {
     }
 
     @GetMapping("/get-all")
-    public ResponseEntity<List<Car>> getCars() {
-        return carServiceImpl.findCars();
+    public ResponseEntity<PageResponse<Car>> getCars(@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+                                                     @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                                     @RequestParam(value = "sortBy", defaultValue = "mark") String sortBy) {
+        return carServiceImpl.findCars(pageNo, pageSize, sortBy);
     }
 
     @PostMapping("/add")

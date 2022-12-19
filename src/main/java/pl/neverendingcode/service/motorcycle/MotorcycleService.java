@@ -6,7 +6,7 @@ import pl.neverendingcode.model.Motorcycle;
 import java.util.List;
 
 public interface MotorcycleService {
-    ResponseEntity<List<Motorcycle>> findAll();
+    ResponseEntity<List<Motorcycle>> findMotorcycles(Integer pageNo, Integer pageSize, String sortBy);
 
     ResponseEntity<Motorcycle> findMotorcycle(int id);
 
