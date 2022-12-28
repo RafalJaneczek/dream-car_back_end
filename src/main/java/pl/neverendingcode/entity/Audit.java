@@ -1,4 +1,4 @@
-package pl.neverendingcode.model;
+package pl.neverendingcode.entity;
 
 import lombok.Getter;
 import lombok.Setter;

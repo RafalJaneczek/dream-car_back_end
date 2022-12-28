@@ -3,7 +3,7 @@ package pl.neverendingcode.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.neverendingcode.model.Car;
+import pl.neverendingcode.entity.Car;
 import pl.neverendingcode.model.PageResponse;
 import pl.neverendingcode.service.car.CarServiceImpl;
 

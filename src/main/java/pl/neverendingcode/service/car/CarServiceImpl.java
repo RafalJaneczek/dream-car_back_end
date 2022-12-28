@@ -11,12 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.neverendingcode.adapter.VehicleRepositoryImpl;
 import pl.neverendingcode.exception.CarNotFoundException;
-import pl.neverendingcode.model.Car;
+import pl.neverendingcode.entity.Car;
 import pl.neverendingcode.model.PageResponse;
 
 import java.net.URI;
 import java.util.Collections;
-import java.util.List;
 
 @Slf4j
 @Service

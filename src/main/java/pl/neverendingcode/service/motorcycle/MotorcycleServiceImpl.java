@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.neverendingcode.adapter.VehicleRepositoryImpl;
 import pl.neverendingcode.exception.MotorcycleNotFoundException;
-import pl.neverendingcode.model.Motorcycle;
+import pl.neverendingcode.entity.Motorcycle;
+import pl.neverendingcode.model.PageResponse;
 
 import java.util.Collections;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -23,14 +23,15 @@ public class MotorcycleServiceImpl implements MotorcycleService {
 
     private final VehicleRepositoryImpl<Motorcycle> motorcycleRepository;
 
-    public ResponseEntity<List<Motorcycle>> findMotorcycles(Integer pageNo, Integer pageSize, String sortBy) {
+    @Override
+    public ResponseEntity<PageResponse<Motorcycle>> findMotorcycles(Integer pageNo, Integer pageSize, String sortBy) {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
         Page<Motorcycle> pageResult = motorcycleRepository.findAll(paging);
 
         if (pageResult.hasContent()) {
-            return ResponseEntity.ok(pageResult.getContent());
+            return ResponseEntity.ok(new PageResponse<>(pageResult.getContent(), pageResult.getTotalPages()));
         } else {
-            return ResponseEntity.ok(Collections.emptyList());
+            return ResponseEntity.ok(new PageResponse<>(Collections.emptyList(), 0));
         }
     }
 

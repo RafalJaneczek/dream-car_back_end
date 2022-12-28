@@ -1,9 +1,10 @@
-package pl.neverendingcode.model;
+package pl.neverendingcode.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import pl.neverendingcode.enums.motorcycle.Type;
 import pl.neverendingcode.enums.motorcycle.EngineType;
 
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotBlank;
 @Entity
 @Getter
 @Setter
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "motorcycles")

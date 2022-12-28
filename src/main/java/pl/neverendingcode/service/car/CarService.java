@@ -1,7 +1,7 @@
 package pl.neverendingcode.service.car;
 
 import org.springframework.http.ResponseEntity;
-import pl.neverendingcode.model.Car;
+import pl.neverendingcode.entity.Car;
 import pl.neverendingcode.model.PageResponse;
 
 public interface CarService {

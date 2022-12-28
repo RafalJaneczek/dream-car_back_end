@@ -3,10 +3,9 @@ package pl.neverendingcode.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.neverendingcode.model.Motorcycle;
+import pl.neverendingcode.entity.Motorcycle;
+import pl.neverendingcode.model.PageResponse;
 import pl.neverendingcode.service.motorcycle.MotorcycleServiceImpl;
-
-import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -22,9 +21,9 @@ public class MotorcycleController {
     }
 
     @GetMapping("/get-all")
-    public ResponseEntity<List<Motorcycle>> getMotorcycles(@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-                                                           @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
-                                                           @RequestParam(value = "sortBy", defaultValue = "mark") String sortBy) {
+    public ResponseEntity<PageResponse<Motorcycle>> getMotorcycles(@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
+                                                                   @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
+                                                                   @RequestParam(value = "sortBy", defaultValue = "mark") String sortBy) {
         return motorcycleServiceImpl.findMotorcycles(pageNo, pageSize, sortBy);
     }
 
