@@ -17,29 +17,29 @@ public class CarController {
 
     @GetMapping("/get/{id}")
     public ResponseEntity<Car> getCar(@PathVariable("id") int id) {
-        return carServiceImpl.findCar(id);
+        return carServiceImpl.fIndById(id);
     }
 
     @GetMapping("/get-all")
     public ResponseEntity<PageResponse<Car>> getCars(@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
                                                      @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
                                                      @RequestParam(value = "sortBy", defaultValue = "mark") String sortBy) {
-        return carServiceImpl.findCars(pageNo, pageSize, sortBy);
+        return carServiceImpl.findAll(pageNo, pageSize, sortBy);
     }
 
     @PostMapping("/add")
     public ResponseEntity<Car> addCar(@RequestBody Car car) {
-        return carServiceImpl.saveCar(car);
+        return carServiceImpl.save(car);
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateCar(@PathVariable("id") int id, @RequestBody Car car) {
-        return carServiceImpl.updateCar(id, car);
+        return carServiceImpl.update(id, car);
     }
 
     @DeleteMapping("/remove/{id}")
     public ResponseEntity<?> removeCar(@PathVariable int id) {
-        return carServiceImpl.removeCar(id);
+        return carServiceImpl.remove(id);
     }
 
 }

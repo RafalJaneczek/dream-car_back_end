@@ -13,18 +13,19 @@ import pl.neverendingcode.adapter.VehicleRepositoryImpl;
 import pl.neverendingcode.exception.MotorcycleNotFoundException;
 import pl.neverendingcode.entity.Motorcycle;
 import pl.neverendingcode.model.PageResponse;
+import pl.neverendingcode.service.VehicleService;
 
 import java.util.Collections;
 
 @Slf4j
 @Service
 @AllArgsConstructor
-public class MotorcycleServiceImpl implements MotorcycleService {
+public class MotorcycleServiceImpl implements VehicleService<Motorcycle> {
 
     private final VehicleRepositoryImpl<Motorcycle> motorcycleRepository;
 
     @Override
-    public ResponseEntity<PageResponse<Motorcycle>> findMotorcycles(Integer pageNo, Integer pageSize, String sortBy) {
+    public ResponseEntity<PageResponse<Motorcycle>> findAll(Integer pageNo, Integer pageSize, String sortBy) {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
         Page<Motorcycle> pageResult = motorcycleRepository.findAll(paging);
 
@@ -36,26 +37,26 @@ public class MotorcycleServiceImpl implements MotorcycleService {
     }
 
     @Override
-    public ResponseEntity<Motorcycle> findMotorcycle(int id) {
+    public ResponseEntity<Motorcycle> fIndById(int id) {
         return motorcycleRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseThrow(() -> new MotorcycleNotFoundException("Motorcycle with id: " + id + " not found"));
     }
 
     @Override
-    public ResponseEntity<Motorcycle> saveMotorcycle(Motorcycle motorcycle) {
+    public ResponseEntity<Motorcycle> save(Motorcycle motorcycle) {
         return ResponseEntity.ok().body(motorcycleRepository.save(motorcycle));
     }
 
     @Override
-    public ResponseEntity<?> removeMotorcycle(int id) {
+    public ResponseEntity<?> remove(int id) {
         motorcycleRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @Override
     @Transactional
-    public ResponseEntity<Motorcycle> updateMotorcycle(int id, Motorcycle toUpdate) {
+    public ResponseEntity<Motorcycle> update(int id, Motorcycle toUpdate) {
         Motorcycle result = motorcycleRepository.findById(id).map(motorcycle -> {
             motorcycle.updateFrom(toUpdate);
             return motorcycleRepository.save(motorcycle);

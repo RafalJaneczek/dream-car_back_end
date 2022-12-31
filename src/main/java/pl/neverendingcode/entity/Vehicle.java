@@ -1,5 +1,7 @@
 package pl.neverendingcode.entity;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,13 @@ import java.math.BigInteger;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Car.class, name = "car"),
+        @JsonSubTypes.Type(value = Motorcycle.class, name = "motorcycle")
+})
 public class Vehicle {
 
     @Id

@@ -10,9 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.neverendingcode.adapter.VehicleRepositoryImpl;
-import pl.neverendingcode.exception.CarNotFoundException;
 import pl.neverendingcode.entity.Car;
+import pl.neverendingcode.exception.CarNotFoundException;
 import pl.neverendingcode.model.PageResponse;
+import pl.neverendingcode.service.VehicleService;
 
 import java.net.URI;
 import java.util.Collections;
@@ -20,12 +21,12 @@ import java.util.Collections;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CarServiceImpl implements CarService {
+public class CarServiceImpl implements VehicleService<Car> {
 
     private final VehicleRepositoryImpl<Car> carRepository;
 
     @Override
-    public ResponseEntity<PageResponse<Car>> findCars(Integer pageNo, Integer pageSize, String sortBy) {
+    public ResponseEntity<PageResponse<Car>> findAll(Integer pageNo, Integer pageSize, String sortBy) {
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
         Page<Car> pageResult = carRepository.findAll(paging);
 
@@ -37,27 +38,27 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public ResponseEntity<Car> findCar(int id) {
+    public ResponseEntity<Car> fIndById(int id) {
         return carRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseThrow(() -> new CarNotFoundException("Car with id: " + id + " not found"));
     }
 
     @Override
-    public ResponseEntity<Car> saveCar(Car car) {
+    public ResponseEntity<Car> save(Car car) {
         Car result = carRepository.save(car);
         return ResponseEntity.created(URI.create("/car/get/" + result.getId())).body(result);
     }
 
     @Override
-    public ResponseEntity<?> removeCar(int id) {
+    public ResponseEntity<?> remove(int id) {
         carRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @Override
     @Transactional
-    public ResponseEntity<Car> updateCar(int id, Car toUpdate) {
+    public ResponseEntity<Car> update(int id, Car toUpdate) {
         Car result = carRepository.findById(id).map(car -> {
             car.updateFrom(toUpdate);
             return carRepository.save(car);
