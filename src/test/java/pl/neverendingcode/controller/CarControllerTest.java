@@ -34,6 +34,8 @@ import java.util.Objects;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static pl.neverendingcode.helper.CarProviderHelper.getCar_1;
+import static pl.neverendingcode.helper.CarProviderHelper.getCarsList;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -67,6 +69,7 @@ class CarControllerTest {
         Car responseBody = mapper.readValue(response.getResponse().getContentAsString(), Car.class);
         assertAll(
                 () -> assertThat(response.getResponse().getStatus()).isEqualTo(HttpStatus.CREATED.value()),
+                () -> assertThat(response.getResponse().getHeader("Location")).isEqualTo("/car/get/" + responseBody.getId()),
                 () -> assertThat(responseBody).isNotNull(),
                 () -> assertThat(responseBody.getCourse()).isEqualTo(car.getCourse()),
                 () -> assertThat(responseBody.getId()).isNotNull(),
@@ -211,42 +214,6 @@ class CarControllerTest {
                 () -> assertThat(response.getResolvedException()).isInstanceOf(CarNotFoundException.class),
                 () -> assertThat(Objects.requireNonNull(response.getResolvedException()).getMessage()).isEqualTo("Car with id: " + id + " not found")
         );
-    }
-
-    private static Car getCar_1() {
-        return Car.builder()
-                .mark("LAMBORGHINI")
-                .model("HURACAN")
-                .engineCapacity(4879)
-                .enginePower(675)
-                .course(1500)
-                .vehicleCondition(VehicleCondition.USED)
-                .damaged(false)
-                .productionYear(2021)
-                .price(BigInteger.valueOf(1750000))
-                .engineType(EngineType.GAS)
-                .bodyType(BodyType.COUPE)
-                .numberOfSeats(2).build();
-    }
-
-    private static Car getCar_2() {
-        return Car.builder()
-                .mark("FERRARI")
-                .model("ENZO")
-                .engineCapacity(5289)
-                .enginePower(660)
-                .course(25000)
-                .vehicleCondition(VehicleCondition.USED)
-                .damaged(false)
-                .productionYear(2015)
-                .price(BigInteger.valueOf(2500000))
-                .engineType(EngineType.GAS)
-                .bodyType(BodyType.COUPE)
-                .numberOfSeats(2).build();
-    }
-
-    private static List<Car> getCarsList() {
-        return List.of(getCar_1(), getCar_2());
     }
 
 }
