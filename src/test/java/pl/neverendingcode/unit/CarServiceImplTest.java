@@ -86,7 +86,7 @@ class CarServiceImplTest {
         assertAll(
                 () -> assertThat(response.getBody()).isNotNull(),
                 () -> assertThat(response.getBody()).isInstanceOf(Car.class),
-                () -> assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK.value())
+                () -> assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK)
         );
 
     }
