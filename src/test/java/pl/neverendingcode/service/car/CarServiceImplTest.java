@@ -51,7 +51,7 @@ class CarServiceImplTest {
     @DisplayName("Should find and return car object by given id")
     void should_find_and_return_car_object_by_given_id() {
         // given
-//        int id = anyInt();
+        int id = anyInt();
 //
 //        // when
 //        when(carRepository.findById(id)).thenReturn(Optional.of(new Car()));
