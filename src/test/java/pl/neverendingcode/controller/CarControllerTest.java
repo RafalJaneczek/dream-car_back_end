@@ -19,16 +19,11 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.transaction.annotation.Transactional;
-import pl.neverendingcode.adapter.VehicleRepositoryImpl;
-import pl.neverendingcode.entity.Car;
-import pl.neverendingcode.enums.VehicleCondition;
-import pl.neverendingcode.enums.car.BodyType;
-import pl.neverendingcode.enums.car.EngineType;
-import pl.neverendingcode.exception.CarNotFoundException;
-import pl.neverendingcode.model.PageResponse;
+import pl.neverendingcode.vehicle.adapter.VehicleRepositoryImpl;
+import pl.neverendingcode.vehicle.car.entity.Car;
+import pl.neverendingcode.vehicle.car.exception.CarNotFoundException;
+import pl.neverendingcode.vehicle.model.PageResponse;
 
-import java.math.BigInteger;
-import java.util.List;
 import java.util.Objects;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;

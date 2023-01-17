@@ -1,9 +1,9 @@
 package pl.neverendingcode.helper;
 
-import pl.neverendingcode.entity.Car;
-import pl.neverendingcode.enums.VehicleCondition;
-import pl.neverendingcode.enums.car.BodyType;
-import pl.neverendingcode.enums.car.EngineType;
+import pl.neverendingcode.vehicle.car.entity.Car;
+import pl.neverendingcode.vehicle.enums.VehicleCondition;
+import pl.neverendingcode.vehicle.car.enums.BodyType;
+import pl.neverendingcode.vehicle.car.enums.EngineType;
 
 import java.math.BigInteger;
 import java.util.List;
