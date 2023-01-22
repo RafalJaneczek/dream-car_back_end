@@ -13,7 +13,7 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
-@Table(name = "roles")
+@Table(name = "t_roles")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Role {

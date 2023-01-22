@@ -9,7 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.neverendingcode.vehicle.adapter.VehicleRepositoryImpl;
+import pl.neverendingcode.vehicle.factory.VehicleRepositoryFactory;
 import pl.neverendingcode.vehicle.car.entity.Car;
 import pl.neverendingcode.vehicle.car.exception.CarNotFoundException;
 import pl.neverendingcode.vehicle.model.PageResponse;
@@ -23,7 +23,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class CarServiceImpl implements VehicleService<Car> {
 
-    private final VehicleRepositoryImpl<Car> carRepository;
+    private final VehicleRepositoryFactory<Car> carRepository;
 
     @Override
     public ResponseEntity<PageResponse<Car>> findAll(Integer pageNo, Integer pageSize, String sortBy) {

@@ -9,7 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import pl.neverendingcode.vehicle.adapter.VehicleRepositoryImpl;
+import pl.neverendingcode.vehicle.factory.VehicleRepositoryFactory;
 import pl.neverendingcode.vehicle.car.entity.Car;
 import pl.neverendingcode.vehicle.car.exception.CarNotFoundException;
 import pl.neverendingcode.vehicle.model.PageResponse;
@@ -31,7 +31,7 @@ import static pl.neverendingcode.helper.CarProviderHelper.getCarsList;
 class CarServiceImplTest {
 
     @Mock
-    private VehicleRepositoryImpl<Car> carRepository;
+    private VehicleRepositoryFactory<Car> carRepository;
 
     private CarServiceImpl carService;
     @BeforeEach

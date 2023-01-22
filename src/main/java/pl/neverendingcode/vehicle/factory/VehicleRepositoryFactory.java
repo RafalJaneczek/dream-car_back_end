@@ -1,4 +1,4 @@
-package pl.neverendingcode.vehicle.adapter;
+package pl.neverendingcode.vehicle.factory;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -6,7 +6,7 @@ import pl.neverendingcode.vehicle.entity.Vehicle;
 
 import java.util.Optional;
 
-public interface VehicleRepositoryImpl<T extends Vehicle> {
+public interface VehicleRepositoryFactory<T extends Vehicle> {
 
     Page<T> findAll(Pageable pageable);
 
