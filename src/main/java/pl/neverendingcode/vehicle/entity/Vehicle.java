@@ -1,11 +1,10 @@
 package pl.neverendingcode.vehicle.entity;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import pl.neverendingcode.vehicle.enums.VehicleCondition;
 import pl.neverendingcode.vehicle.car.entity.Car;
+import pl.neverendingcode.vehicle.enums.VehicleCondition;
 import pl.neverendingcode.vehicle.motorcycle.entity.Motorcycle;
 
 import javax.persistence.*;
@@ -21,9 +20,6 @@ import java.math.BigInteger;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @MappedSuperclass
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        property = "type")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Car.class, name = "car"),
         @JsonSubTypes.Type(value = Motorcycle.class, name = "motorcycle")

@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @SuperBuilder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "t_cars")
 public class Car extends Vehicle {
