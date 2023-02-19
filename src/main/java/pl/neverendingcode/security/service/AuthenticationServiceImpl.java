@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.neverendingcode.core.annotation.LogApiInfo;
 import pl.neverendingcode.security.entity.Role;
 import pl.neverendingcode.security.entity.User;
 import pl.neverendingcode.security.enums.UserRole;
@@ -39,8 +40,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtUtils jwtUtils;
 
     @Override
+    @LogApiInfo
     public ResponseEntity<JwtResponse> loginUser(LoginRequest request) {
-        log.info("Start authenticating process for user: {}", request.username());
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.username(), request.password()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -49,16 +50,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority).toList();
-        JwtResponse response = new JwtResponse(jwt,userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles);
+        JwtResponse response = new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles);
 
-        log.info("Finish authenticating process. Response: {}", response);
         return ResponseEntity.ok(response);
     }
 
     @Override
+    @LogApiInfo
     public ResponseEntity<?> signupUser(SignupRequest request) {
-        log.info("Start registering user process, request {}: ", request);
-
         if (userRepository.existsByUsername(request.username())) {
             throw new UsernameException("Username is already taken!");
         }
@@ -69,7 +68,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         User user = new User(request.username(), request.email(), passwordEncoder.encode(request.password()), prepareUserRoles(Set.of(UserRole.ROLE_USER)));
         userRepository.save(user);
 
-        log.info("Finish registering user process");
         return ResponseEntity.noContent().build();
     }
 
