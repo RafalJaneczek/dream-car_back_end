@@ -10,7 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.neverendingcode.core.annotation.LogApiInfo;
+import pl.neverendingcode.core.annotation.CommunicationLog;
 import pl.neverendingcode.security.entity.Role;
 import pl.neverendingcode.security.entity.User;
 import pl.neverendingcode.security.enums.UserRole;
@@ -40,7 +40,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final JwtUtils jwtUtils;
 
     @Override
-    @LogApiInfo
+    @CommunicationLog
     public ResponseEntity<JwtResponse> loginUser(LoginRequest request) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.username(), request.password()));
 
@@ -56,7 +56,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    @LogApiInfo
+    @CommunicationLog
     public ResponseEntity<?> signupUser(SignupRequest request) {
         if (userRepository.existsByUsername(request.username())) {
             throw new UsernameException("Username is already taken!");

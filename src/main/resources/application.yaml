@@ -5,9 +5,9 @@ spring:
     database-platform: 'org.hibernate.dialect.Oracle10gDialect'
     show-sql: true
   datasource:
-    url: 'jdbc:oracle:thin:@localhost:1521/ORCLCDB.localdomain'
-    username: 'car_service'
-    password: 'car_service'
+    url: 'jdbc:oracle:thin:@172.17.0.2:1521/ORCLCDB'
+    username: 'dummy'
+    password: 'dummy'
     driver-class-name: oracle.jdbc.driver.OracleDriver
   properties:
     hibernate:

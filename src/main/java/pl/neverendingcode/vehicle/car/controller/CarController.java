@@ -1,50 +1,56 @@
 package pl.neverendingcode.vehicle.car.controller;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.neverendingcode.core.annotation.LogApiInfo;
+import org.springframework.web.multipart.MultipartFile;
+import pl.neverendingcode.core.annotation.CommunicationLog;
+import pl.neverendingcode.core.helper.JsonObjectMapper;
 import pl.neverendingcode.vehicle.car.entity.Car;
-import pl.neverendingcode.vehicle.car.service.CarServiceImpl;
+import pl.neverendingcode.vehicle.contract.VehicleService;
 import pl.neverendingcode.vehicle.model.PageResponse;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/car")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CarController {
 
-    private final CarServiceImpl carServiceImpl;
+    private final VehicleService<Car> carService;
+    private final JsonObjectMapper jsonObjectMapper;
 
     @GetMapping("/get/{id}")
-    @LogApiInfo
+    @CommunicationLog
     public ResponseEntity<Car> getCar(@PathVariable("id") int id) {
-        return carServiceImpl.fIndById(id);
+        return carService.findById(id);
     }
 
     @GetMapping("/get-all")
-    @LogApiInfo
+    @CommunicationLog
     public ResponseEntity<PageResponse<Car>> getCars(@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
                                                      @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
                                                      @RequestParam(value = "sortBy", defaultValue = "mark") String sortBy) {
-        return carServiceImpl.findAll(pageNo, pageSize, sortBy);
+        return carService.findAll(pageNo, pageSize, sortBy);
     }
 
-    @PostMapping("/add")
-    @LogApiInfo
-    public ResponseEntity<Car> addCar(@RequestBody Car car) {
-        return carServiceImpl.save(car);
+    @PostMapping(value = "/add", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @CommunicationLog
+    public ResponseEntity<Car> addCar(@RequestPart String car, @RequestPart("file") List<MultipartFile> files) {
+        return carService.save(jsonObjectMapper.fromJSON(car, Car.class), files);
     }
 
     @PutMapping("/update/{id}")
-    @LogApiInfo
+    @CommunicationLog
     public ResponseEntity<?> updateCar(@PathVariable("id") int id, @RequestBody Car car) {
-        return carServiceImpl.update(id, car);
+        return carService.update(id, car);
     }
 
     @DeleteMapping("/remove/{id}")
-    @LogApiInfo()
+    @CommunicationLog()
     public ResponseEntity<?> removeCar(@PathVariable int id) {
-        return carServiceImpl.remove(id);
+        return carService.remove(id);
     }
 
 }

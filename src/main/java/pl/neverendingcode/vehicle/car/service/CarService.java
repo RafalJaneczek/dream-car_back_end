@@ -9,21 +9,26 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import pl.neverendingcode.vehicle.car.entity.Car;
 import pl.neverendingcode.vehicle.car.exception.CarNotFoundException;
-import pl.neverendingcode.vehicle.factory.VehicleRepositoryFactory;
+import pl.neverendingcode.vehicle.contract.VehicleRepository;
+import pl.neverendingcode.vehicle.contract.VehicleService;
 import pl.neverendingcode.vehicle.model.PageResponse;
-import pl.neverendingcode.vehicle.service.VehicleService;
+import pl.neverendingcode.vehicle.service.CarPhotoService;
 
 import java.net.URI;
 import java.util.Collections;
+import java.util.List;
 
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
-public class CarServiceImpl implements VehicleService<Car> {
+public class CarService implements VehicleService<Car> {
 
-    private final VehicleRepositoryFactory<Car> carRepository;
+    private final VehicleRepository<Car> carRepository;
+    private final CarPhotoService photoService;
 
     @Override
     public ResponseEntity<PageResponse<Car>> findAll(Integer pageNo, Integer pageSize, String sortBy) {
@@ -38,14 +43,15 @@ public class CarServiceImpl implements VehicleService<Car> {
     }
 
     @Override
-    public ResponseEntity<Car> fIndById(int id) {
+    public ResponseEntity<Car> findById(int id) {
         return carRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseThrow(() -> new CarNotFoundException("Car with id: " + id + " not found"));
     }
 
     @Override
-    public ResponseEntity<Car> save(Car car) {
+    public ResponseEntity<Car> save(Car car, List<MultipartFile> files) {
+        photoService.preparePhotos(car, files).forEach(car::addPhoto);
         Car result = carRepository.save(car);
         return ResponseEntity.created(URI.create("/car/get/" + result.getId())).body(result);
     }
@@ -57,10 +63,9 @@ public class CarServiceImpl implements VehicleService<Car> {
     }
 
     @Override
-    @Transactional
     public ResponseEntity<Car> update(int id, Car toUpdate) {
         Car result = carRepository.findById(id).map(car -> {
-            car.updateFrom(toUpdate);
+            car.updateFrom(toUpdate, car.getCarPhotos());
             return carRepository.save(car);
         }).orElseThrow(() -> new CarNotFoundException("Car with id: " + id + " not found"));
         log.info("Car with id: " + toUpdate.getId() + " has been updated successfully");

@@ -2,6 +2,7 @@ package pl.neverendingcode.security.controller;
 
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.neverendingcode.security.model.request.LoginRequest;
@@ -11,7 +12,7 @@ import pl.neverendingcode.security.service.AuthenticationServiceImpl;
 
 @RestController
 @RequestMapping("/api/auth/user")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AuthenticationController {
 
     private final AuthenticationServiceImpl authenticationService;

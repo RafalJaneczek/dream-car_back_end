@@ -21,6 +21,7 @@ import pl.neverendingcode.security.jwt.AuthTokenFilter;
 import pl.neverendingcode.security.service.UserDetailsServiceImpl;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Configuration
@@ -32,12 +33,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsServiceImpl userDetailsService;
     private final AuthTokenFilter authTokenFilter;
 
+    private static final List<String> PERMITTED_URLS = Arrays.asList(
+            "/api/auth/user/**",
+            "/api/car/get-all",
+            "/api/car/get/**",
+            "/api/car/add/**"
+    );
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers( "/api/auth/user/**", "/api/car/get-all", "/api/car/get/**").permitAll()
+                .authorizeRequests().antMatchers(PERMITTED_URLS.toArray(new String[0])).permitAll()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
@@ -62,14 +70,40 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(List.of("http://localhost:4200"));
-        corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH"));
-        corsConfiguration.setAllowedHeaders(Arrays.asList("X-Requested-With", "Origin", "Content-Type",
-                "Accept", "Authorization", "Access-Control"));
+        corsConfiguration.setAllowedOrigins(getAllowedOrigins());
+        corsConfiguration.setAllowedMethods(getAllowedMethods());
+        corsConfiguration.setAllowedHeaders(getAllowedHeaders());
         corsConfiguration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
+    }
+
+    private List<String> getAllowedMethods() {
+        String allowedMethods = System.getenv("ALLOWED_METHODS");
+        if (allowedMethods != null && !allowedMethods.isEmpty()) {
+            return Arrays.asList(allowedMethods.split(","));
+        } else {
+            return Arrays.asList("GET", "POST", "OPTIONS", "DELETE", "PUT", "PATCH");
+        }
+    }
+
+    private List<String> getAllowedOrigins() {
+        String allowedOrigins = System.getenv("ALLOWED_ORIGINS");
+        if (allowedOrigins != null && !allowedOrigins.isEmpty()) {
+            return Arrays.asList(allowedOrigins.split(","));
+        } else {
+            return Collections.singletonList("http://localhost:4200");
+        }
+    }
+
+    private List<String> getAllowedHeaders() {
+        String allowedHeaders = System.getenv("ALLOWED_HEADERS");
+        if (allowedHeaders != null && !allowedHeaders.isEmpty()) {
+            return Arrays.asList(allowedHeaders.split(","));
+        } else {
+            return Arrays.asList("X-Requested-With", "Origin", "Content-Type", "Accept", "Authorization", "Access-Control");
+        }
     }
 
 }

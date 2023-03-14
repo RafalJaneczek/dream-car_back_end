@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface LogApiInfo {
+public @interface CommunicationLog {
     boolean hasArguments() default true;
 
     boolean returnsObject() default true;

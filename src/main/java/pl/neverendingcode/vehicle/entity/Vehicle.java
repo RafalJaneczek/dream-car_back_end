@@ -9,11 +9,14 @@ import pl.neverendingcode.vehicle.motorcycle.entity.Motorcycle;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.math.BigInteger;
+import java.math.BigDecimal;
 
+
+/**
+ * Represents a vehicle entity.
+ */
 @Getter
 @Setter
 @SuperBuilder
@@ -26,50 +29,85 @@ import java.math.BigInteger;
 })
 public class Vehicle {
 
+    /**
+     * The id of the vehicle entity.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vehicle_sequence")
     @SequenceGenerator(name = "vehicle_sequence", sequenceName = "vehicle_sequence", allocationSize = 1)
-    private Integer id;
+    private Long id;
 
+    /**
+     * The mark of the vehicle.
+     */
     @Column(name = "mark")
     @Min(message = "Mark cannot be shorter than 2 characters", value = 2)
     @NotEmpty(message = "Mark must not be empty")
     protected String mark;
 
+    /**
+     * The model of the vehicle.
+     */
     @Column(name = "model")
     @Min(message = "Model cannot be shorter than 2 characters", value = 2)
     @NotEmpty(message = "Model must not be empty")
     protected String model;
 
+    /**
+     * The engine capacity of the vehicle.
+     */
     @Column(name = "engine_capacity")
     @NotNull(message = "Engine capacity must not be empty")
     protected int engineCapacity;
 
+    /**
+     * The engine power of the vehicle.
+     */
     @Column(name = "engine_power")
     @NotNull(message = "Engine power must not be empty")
     protected int enginePower;
 
+    /**
+     * The mileage of the vehicle.
+     */
     @Column(name = "course")
     @NotNull(message = "Course must not be empty")
     protected int course;
 
+    /**
+     * The condition of the vehicle.
+     */
     @Column(name = "vehicle_condition")
     @Enumerated(EnumType.STRING)
-    @NotBlank(message = "Vehicle condition must not be empty")
+    @NotEmpty(message = "Vehicle condition must not be empty")
     protected VehicleCondition vehicleCondition;
 
+    /**
+     * Indicates whether the vehicle is damaged or not.
+     */
     @Column(name = "damaged")
     @NotNull(message = "Damaged param must not be empty")
-    protected boolean damaged;
+    protected boolean damaged = false;
 
+    /**
+     * The production year of the vehicle.
+     */
     @Column(name = "production_year")
     @NotNull(message = "Production year must not be empty")
     private int productionYear;
 
+    /**
+     * The price of the vehicle.
+     */
     @Column(name = "price")
     @NotNull(message = "Price must not be empty")
-    private BigInteger price;
+    private BigDecimal price;
 
+    /**
+     * Updates the fields of this vehicle from another vehicle.
+     *
+     * @param source the source vehicle to update from
+     */
     protected void updateFrom(Vehicle source) {
         this.mark = source.mark;
         this.model = source.model;

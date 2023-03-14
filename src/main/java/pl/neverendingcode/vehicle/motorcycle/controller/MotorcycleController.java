@@ -1,22 +1,26 @@
 package pl.neverendingcode.vehicle.motorcycle.controller;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pl.neverendingcode.vehicle.motorcycle.entity.Motorcycle;
 import pl.neverendingcode.vehicle.model.PageResponse;
 import pl.neverendingcode.vehicle.motorcycle.service.MotorcycleServiceImpl;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/api//motorcycle")
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class MotorcycleController {
 
     private final MotorcycleServiceImpl motorcycleServiceImpl;
 
     @GetMapping("/get/{id}")
     public ResponseEntity<Motorcycle> getMotorcycle(@PathVariable("id") int id) {
-        return motorcycleServiceImpl.fIndById(id);
+        return motorcycleServiceImpl.findById(id);
     }
 
     @GetMapping("/get-all")
@@ -27,8 +31,8 @@ public class MotorcycleController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Motorcycle> addMotorcycle(@RequestBody Motorcycle motorcycle) {
-        return motorcycleServiceImpl.save(motorcycle);
+    public ResponseEntity<Motorcycle> addMotorcycle(@RequestBody Motorcycle motorcycle, @RequestParam("file") List<MultipartFile> files) {
+        return motorcycleServiceImpl.save(motorcycle, files);
     }
 
     @PutMapping("/update/{id}")

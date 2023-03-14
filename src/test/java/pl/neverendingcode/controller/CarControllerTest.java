@@ -19,7 +19,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.transaction.annotation.Transactional;
-import pl.neverendingcode.vehicle.factory.VehicleRepositoryFactory;
+import pl.neverendingcode.vehicle.contract.VehicleRepository;
 import pl.neverendingcode.vehicle.car.entity.Car;
 import pl.neverendingcode.vehicle.car.exception.CarNotFoundException;
 import pl.neverendingcode.vehicle.model.PageResponse;
@@ -42,7 +42,7 @@ class CarControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private VehicleRepositoryFactory<Car> carRepository;
+    private VehicleRepository<Car> carRepository;
 
     private final ObjectMapper mapper = new ObjectMapper();
 

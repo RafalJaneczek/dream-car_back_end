@@ -1,6 +1,7 @@
 package pl.neverendingcode.vehicle.motorcycle.service;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -9,20 +10,22 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.neverendingcode.vehicle.factory.VehicleRepositoryFactory;
+import org.springframework.web.multipart.MultipartFile;
+import pl.neverendingcode.vehicle.contract.VehicleRepository;
 import pl.neverendingcode.vehicle.motorcycle.exception.MotorcycleNotFoundException;
 import pl.neverendingcode.vehicle.motorcycle.entity.Motorcycle;
 import pl.neverendingcode.vehicle.model.PageResponse;
-import pl.neverendingcode.vehicle.service.VehicleService;
+import pl.neverendingcode.vehicle.contract.VehicleService;
 
 import java.util.Collections;
+import java.util.List;
 
 @Slf4j
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class MotorcycleServiceImpl implements VehicleService<Motorcycle> {
 
-    private final VehicleRepositoryFactory<Motorcycle> motorcycleRepository;
+    private final VehicleRepository<Motorcycle> motorcycleRepository;
 
     @Override
     public ResponseEntity<PageResponse<Motorcycle>> findAll(Integer pageNo, Integer pageSize, String sortBy) {
@@ -37,14 +40,14 @@ public class MotorcycleServiceImpl implements VehicleService<Motorcycle> {
     }
 
     @Override
-    public ResponseEntity<Motorcycle> fIndById(int id) {
+    public ResponseEntity<Motorcycle> findById(int id) {
         return motorcycleRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseThrow(() -> new MotorcycleNotFoundException("Motorcycle with id: " + id + " not found"));
     }
 
     @Override
-    public ResponseEntity<Motorcycle> save(Motorcycle motorcycle) {
+    public ResponseEntity<Motorcycle> save(Motorcycle motorcycle, List<MultipartFile> files) {
         return ResponseEntity.ok().body(motorcycleRepository.save(motorcycle));
     }
 
