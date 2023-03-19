@@ -1,20 +1,24 @@
 package pl.neverendingcode.vehicle.motorcycle.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import pl.neverendingcode.vehicle.entity.Audit;
 import pl.neverendingcode.vehicle.entity.Vehicle;
 import pl.neverendingcode.vehicle.motorcycle.enums.EngineType;
 import pl.neverendingcode.vehicle.motorcycle.enums.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @SuperBuilder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "t_motorcycles")
 public class Motorcycle extends Vehicle {
@@ -28,12 +32,20 @@ public class Motorcycle extends Vehicle {
     @NotBlank(message = "Type must not be empty")
     private Type type;
 
-    @Embedded
-    private Audit audit = new Audit();
+    @OneToMany(mappedBy = "motorcycle", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MotorcyclePhoto> motorcyclePhotos = new ArrayList<>();
 
-    public void updateFrom(final Motorcycle source) {
+    public void addPhoto(MotorcyclePhoto motorcyclePhoto) {
+        motorcyclePhoto.setMotorcycle(this);
+        this.motorcyclePhotos.add(motorcyclePhoto);
+    }
+
+    public void updateFrom(final Vehicle source, final List<MotorcyclePhoto> motorcyclePhotos) {
         super.updateFrom(source);
-        this.engineType = source.engineType;
-        this.type = source.type;
+        if (source instanceof final Motorcycle motorcycle) {
+            this.engineType = motorcycle.engineType;
+            this.type = motorcycle.type;
+            motorcyclePhotos.forEach(this::addPhoto);
+        }
     }
 }

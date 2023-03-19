@@ -17,6 +17,9 @@ spring:
       matching-strategy: ANT_PATH_MATCHER
   flyway:
     baseline-on-migrate: true
+  output:
+    ansi:
+      enabled: ALWAYS
 server:
   port: 8083
 

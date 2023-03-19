@@ -12,6 +12,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 
 /**
@@ -104,6 +105,12 @@ public class Vehicle {
     private BigDecimal price;
 
     /**
+     * The audit information of the vehicle.
+     */
+    @Embedded
+    private Audit audit = new Audit();
+
+    /**
      * Updates the fields of this vehicle from another vehicle.
      *
      * @param source the source vehicle to update from
@@ -120,6 +127,17 @@ public class Vehicle {
         this.price = source.price;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Vehicle vehicle)) return false;
+        return engineCapacity == vehicle.engineCapacity && enginePower == vehicle.enginePower && course == vehicle.course && damaged == vehicle.damaged && productionYear == vehicle.productionYear && Objects.equals(id, vehicle.id) && Objects.equals(mark, vehicle.mark) && Objects.equals(model, vehicle.model) && vehicleCondition == vehicle.vehicleCondition && Objects.equals(price, vehicle.price) && Objects.equals(audit, vehicle.audit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, mark, model, engineCapacity, enginePower, course, vehicleCondition, damaged, productionYear, price, audit);
+    }
 }
 
 

@@ -5,10 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import pl.neverendingcode.core.entity.CarPhoto;
 import pl.neverendingcode.vehicle.car.enums.BodyType;
 import pl.neverendingcode.vehicle.car.enums.EngineType;
-import pl.neverendingcode.vehicle.entity.Audit;
 import pl.neverendingcode.vehicle.entity.Vehicle;
 
 import javax.persistence.*;
@@ -54,12 +52,6 @@ public class Car extends Vehicle {
     private int numberOfSeats;
 
     /**
-     * The audit information of the car.
-     */
-    @Embedded
-    private Audit audit = new Audit();
-
-    /**
      * List of the car photos
      */
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -71,8 +63,8 @@ public class Car extends Vehicle {
      * @param carPhoto instance
      */
     public void addPhoto(CarPhoto carPhoto) {
-        this.carPhotos.add(carPhoto);
         carPhoto.setCar(this);
+        this.carPhotos.add(carPhoto);
     }
 
     /**
@@ -80,7 +72,7 @@ public class Car extends Vehicle {
      *
      * @param source the source car to update from
      */
-    public void updateFrom(final Vehicle source, List<CarPhoto> carPhotos) {
+    public void updateFrom(final Vehicle source, final List<CarPhoto> carPhotos) {
         super.updateFrom(source);
         if (source instanceof final Car carSource) {
             this.engineType = carSource.engineType;
@@ -94,11 +86,12 @@ public class Car extends Vehicle {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Car car)) return false;
-        return numberOfSeats == car.numberOfSeats && engineType == car.engineType && bodyType == car.bodyType && Objects.equals(audit, car.audit);
+        if (!super.equals(o)) return false;
+        return numberOfSeats == car.numberOfSeats && engineType == car.engineType && bodyType == car.bodyType && Objects.equals(carPhotos, car.carPhotos);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(engineType, bodyType, numberOfSeats, audit);
+        return Objects.hash(super.hashCode(), engineType, bodyType, numberOfSeats, carPhotos);
     }
 }
